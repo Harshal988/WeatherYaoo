@@ -29,8 +29,8 @@ public class YahooWeatherService {
         new AsyncTask<String, Void, String>() {
             @Override
             protected String doInBackground(String... params) {
-                String YQL = String.format("select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"nome, ak\"))",params[0]);
-                String endpoint = String.format("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22nome%2C%20ak%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys", Uri.encode(YQL));
+                String YQL = String.format("select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"%s\")",params[0]);
+                String endpoint = String.format("https://query.yahooapis.com/v1/public/yql?q=%s&format=json", Uri.encode(YQL));
                 try
                 {
                     URL url = new URL(endpoint);
@@ -66,7 +66,7 @@ public class YahooWeatherService {
                         return;
                     }
                     Channel channel = new Channel();
-                    channel.populate(queryresult.optJSONObject("result").optJSONObject("channel "));
+                    channel.populate(queryresult.optJSONObject("result").optJSONObject("channel"));
                 }catch (JSONException e){
                     e.printStackTrace();
                 }
